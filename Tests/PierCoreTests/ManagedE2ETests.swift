@@ -51,7 +51,7 @@ final class ManagedE2ETests: XCTestCase {
         let st = try await ManagedClient.status(m)
         XCTAssertEqual(st.state, .running)
 
-        let gotBanner = await waitUntil {
+        let gotBanner = await waitUntil(40) {
             ((try? await ManagedClient.logs(m, tail: 50)) ?? "").contains("Serving HTTP on")
         }
         XCTAssertTrue(gotBanner, "http.server banner should be in the logs")

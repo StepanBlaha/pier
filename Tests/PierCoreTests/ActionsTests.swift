@@ -151,6 +151,7 @@ final class ActionsKillerTests: XCTestCase {
         let outcome = try await Killer.terminate(pid: pid, grace: 3)
         XCTAssertEqual(outcome, .terminated)
         XCTAssertFalse(Killer.isAlive(pid))
+        p.waitUntilExit()  // reap the zombie so the pid is really gone (slow CI runners)
         let again = try await Killer.terminate(pid: pid)
         XCTAssertEqual(again, .alreadyGone)
     }

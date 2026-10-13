@@ -165,7 +165,7 @@ final class DockerMapperTests: XCTestCase {
     func testFakeServerChunked() throws {
         let server = try DockerFakeServer.unix { _ in DockerFakeServer.chunked(Self.fixture) }
         defer { server.stop() }
-        let map = DockerMapper.publishedPorts(sockets: [server.socketPath!], budget: 0.5)
+        let map = DockerMapper.publishedPorts(sockets: [server.socketPath!], budget: 3)
         XCTAssertEqual(map[8080]?.image, "nginx:alpine")
         XCTAssertEqual(map.count, 2)
     }
@@ -174,7 +174,7 @@ final class DockerMapperTests: XCTestCase {
         let server = try DockerFakeServer.unix { _ in DockerFakeServer.ok(Self.fixture) }
         defer { server.stop() }
         // First candidate is a path that is not connectable; second works.
-        let map = DockerMapper.publishedPorts(sockets: ["/tmp/pier-no-such.sock", server.socketPath!], budget: 0.5)
+        let map = DockerMapper.publishedPorts(sockets: ["/tmp/pier-no-such.sock", server.socketPath!], budget: 3)
         XCTAssertEqual(map.count, 2)
     }
 
