@@ -1,0 +1,23 @@
+name: Feature request
+description: An idea to make pier better
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: The problem or workflow, before any solution.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help?
+      description: How you imagine it working, in the CLI, the app, or both.
+  - type: checkboxes
+    id: checked
+    attributes:
+      label: Before you post
+      options:
+        - label: I checked docs/IDEAS.md and existing issues.
+          required: true

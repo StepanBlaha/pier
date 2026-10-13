@@ -189,6 +189,9 @@ final class AppState: ObservableObject {
         }
         var manifests = await managedNow
         if DebugFlags.forceEmpty { fresh = []; manifests = [] }   // PIER_DEBUG_EMPTY: screenshot aid
+        #if DEBUG
+        if DebugFlags.demo { fresh = DemoData.services(); manifests = [] }   // PIER_DEBUG_DEMO: screenshot aid
+        #endif
         if full {
             let stacks = await Task.detached(priority: .utility) { Self.loadStacks() }.value
             if stacks.known != knownStacks { knownStacks = stacks.known }

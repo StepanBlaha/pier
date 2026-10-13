@@ -167,11 +167,14 @@ enum DebugFlags {
     static var forceWelcome: Bool { isSet("PIER_DEBUG_WELCOME") }
     /// Show the hover quick actions on the selected row without a real mouse hover.
     static var forceHover: Bool { isSet("PIER_DEBUG_HOVER") }
+    /// Replace the live scan with made-up services (README screenshots without real project names).
+    static var demo: Bool { isSet("PIER_DEBUG_DEMO") }
     #else
     static var forceEmpty: Bool { false }
     static var forceLoading: Bool { false }
     static var forceWelcome: Bool { false }
     static var forceHover: Bool { false }
+    static var demo: Bool { false }
     #endif
 }
 

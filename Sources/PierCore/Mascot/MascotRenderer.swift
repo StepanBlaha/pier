@@ -31,7 +31,7 @@ public struct MascotStyle: Equatable, Sendable {
 }
 
 public enum Mascot {
-    public static let repoURL = "https://github.com/StepanBlha/pier"
+    public static let repoURL = "https://github.com/StepanBlaha/pier"
     /// Narrower terminals get no mascot at all.
     public static let minTerminalWidth = 40
 

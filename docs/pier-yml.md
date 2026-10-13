@@ -9,7 +9,7 @@ then in each parent directory, stopping at `$HOME`. Use `-f FILE` (or a director
 ## Reference
 
 ```yaml
-name: relay                  # optional; default = folder name of the pier.yml
+name: shop                  # optional; default = folder name of the pier.yml
 services:
   web:
     run: pnpm dev            # string or array (see below)
@@ -71,7 +71,7 @@ pier up [service...] [-f FILE] [--dry-run] [--json]
 
 `--dry-run` prints the waves without starting anything. `--json` prints machine-readable results (no progress lines).
 Services keep running after `pier up` exits (or you hit Ctrl-C); stop them with `pier down`.
-Logs: `pier logs relay/web`.
+Logs: `pier logs shop/web`.
 
 ```
 pier down [service...] [-f FILE] [--all-stacks] [--json]
@@ -107,10 +107,10 @@ wrapper.
 ## Example 2: Vite + FastAPI + Redis (Docker)
 
 ```yaml
-name: relay
+name: shop
 services:
   redis:
-    run: docker run --rm --name relay-redis -p 6379:6379 redis:7
+    run: docker run --rm --name shop-redis -p 6379:6379 redis:7
     port: 6379
   api:
     run: uv run uvicorn app.main:app --reload --port 8000

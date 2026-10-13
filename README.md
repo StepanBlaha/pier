@@ -1,148 +1,196 @@
 <p align="center">
-  <img src="assets/mascot/saluting.png" alt="pier mascot: a seagull in a sailor hat" width="200">
+  <img src="assets/logo.png" alt="pier logo: a seagull in a sailor hat" width="180">
 </p>
 
 <h1 align="center">pier</h1>
 
 <p align="center">
-  <b>See what's running on localhost and which project it belongs to.</b><br>
-  A macOS menu bar app and CLI to find, identify, open, restart and stop your local dev servers.
+  <b>See what's running on localhost, and which project it belongs to.</b><br>
+  A macOS menu bar app and CLI for finding, opening, restarting and cleaning up your dev servers.
+</p>
+
+<p align="center">
+  <a href="https://github.com/StepanBlaha/pier/actions/workflows/ci.yml"><img src="https://github.com/StepanBlaha/pier/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/StepanBlaha/pier/releases/latest"><img src="https://img.shields.io/github/v/release/StepanBlaha/pier?color=2350a8" alt="Latest release"></a>
+  <img src="https://img.shields.io/badge/macOS-14%2B-0d1b4c" alt="macOS 14+">
+  <img src="https://img.shields.io/badge/Swift-6-f5b82e" alt="Swift 6">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2350a8" alt="MIT license"></a>
 </p>
 
 ---
 
-`lsof` tells you `node 4821 *:3000`. pier tells you this:
+<img src="assets/mascot/thinking.png" alt="the pier gull, thinking" width="120" align="right">
 
-```
-$ pier
-PORT   NAME                      PROJECT       FRAMEWORK/INFRA  HEALTH  BIND   UPTIME
-3000   frontend                  frontend      Next.js          ● ok    LAN    3h
-3100   Relay CRM                 relay-crm     Next.js          ● ok    local  11d
-4200   LiteLLM API - Swagger UI  codex-router  FastAPI          ● ok    local  15d
-11434  Ollama                    -             Ollama           ● ok    local  15d
-```
+> *"Port 3000 is already in use. By what?!"*
 
-For each listening port, pier works out the **project** (from the process's working directory), the
-**framework** (Next.js, Vite, Astro, Rails, Django, FastAPI and more), **infrastructure** (Postgres,
-Redis, Ollama, Docker containers), the **page title and favicon**, the **git branch**, its **health**,
+Every web developer ends up with a pile of forgotten dev servers. `lsof` says `node 4821 *:3000`, which
+tells you nothing when six `node` processes are running.
+
+**pier** is a little gull who keeps watch over your ports. For each one, it tells you **which project**
+it belongs to (from the process's working directory), the **framework** (Next.js, Vite, Astro, Rails,
+Django, FastAPI and more), the **page title and favicon**, the **git branch**, whether it's **healthy**,
 whether it's **reachable from your LAN**, and **what started it** (VS Code, iTerm, tmux, Claude Code).
+Then it lets you open, restart, stop, share or clean up any of it.
+
+<p align="center">
+  <img src="assets/screenshots/ls.png" alt="pier ls showing projects, frameworks, health and uptime, and pier stale finding a forgotten server" width="820">
+</p>
 
 ## Install
 
-<img src="assets/mascot/clipboard.png" alt="gull with a clipboard" width="130" align="right">
+<img src="assets/mascot/clipboard.png" alt="the pier gull with a clipboard" width="120" align="right">
 
 ```bash
 brew install stepanblaha/tap/pier
+pier app install        # optional: the menu bar app
 ```
 
-The formula builds pier from source with the Xcode Command Line Tools, so macOS never shows a Gatekeeper
-warning. Then install the menu bar app:
-
-```bash
-pier app install
-```
+The formula builds pier from source with your Swift toolchain (Xcode or the Command Line Tools), so
+macOS never shows a Gatekeeper warning. Requires macOS 14 or later.
 
 <details>
-<summary>Build manually</summary>
+<summary>Other ways to install</summary>
+
+**Prebuilt app:** grab `pier-<version>-macos-arm64.zip` from [Releases](https://github.com/StepanBlaha/pier/releases),
+move `Pier.app` to `~/Applications`, then clear the download quarantine (pier isn't notarized):
+
+```bash
+xattr -dr com.apple.quarantine ~/Applications/Pier.app
+```
+
+The CLI ships inside the app at `Pier.app/Contents/Resources/pier`.
+
+**From source:**
 
 ```bash
 git clone https://github.com/StepanBlaha/pier && cd pier
 swift build -c release
-ln -sf "$PWD/.build/release/pier" ~/.local/bin/pier   # any directory on your PATH
+ln -sf "$PWD/.build/release/pier" /usr/local/bin/pier   # or any directory on your PATH
 ```
-
-Requires macOS 14+ and Swift 6 (Xcode or the Command Line Tools).
 </details>
 
-## Usage
+## The menu bar app
 
-<img src="assets/mascot/standing.png" alt="gull standing" width="130" align="right">
+<img src="assets/screenshots/menu.png" alt="Pier's menu bar popover: projects grouped with ports, hover actions, idle badge, infra section and a clean-up button" width="340" align="right">
 
-Most commands take a **target**: a port (`3100`) or a fuzzy name (`relay`, `next`, `postgres`).
+Press <kbd>⌥</kbd><kbd>⌘</kbd><kbd>P</kbd> anywhere, type a few letters and hit <kbd>⏎</kbd>.
 
-### Inspect
+- **One row per project.** Five ports of the same app collapse into a single row with port chips.
+- **Hover a row** to open, copy the URL, read logs, restart or stop it, and see uptime, CPU and memory.
+- **Details panel** with URLs (local, LAN, tunnel), git branch, runtime, owners, a QR code for your phone,
+  *open in editor* and *jump to the terminal that started it*.
+- **Stale servers** get an *idle 9d* badge and a one-click clean-up.
+- **Stacks** from `pier.yml` start and stop with one button, and **Run…** starts any project's dev
+  server under pier, logs included.
+- **Pin and rename** what matters. Get a notification when a managed server crashes.
+
+The gull lives in your menu bar and adapts to light and dark mode.
+
+<br clear="right">
+
+## The terminal tool
+
+<img src="assets/mascot/pointing.png" alt="the pier gull, pointing" width="120" align="right">
+
+Most commands take a **target**: a port (`3000`, always exact) or a fuzzy name (`shop`, `next`,
+`postgres`). Every command supports `--json`.
+
+### Look around
 
 | Command | What it does |
 |---|---|
-| `pier` / `pier ls` | Lists everything listening, labeled by project. `--all` includes system noise, `--json` gives JSON |
-| `pier watch` | Live `top`-like view. Keys: `o` open · `c` copy · `k` kill · `/` filter · `⏎` details |
-| `pier info <target>` | Shows full details: path, branch, runtime, owners, CPU and memory, favicon, command line |
-| `pier url <target>` | Prints the URL, pipe-friendly. `--lan` gives the LAN URL, `--tunnel` the public URL |
-| `pier stale` | Lists forgotten dev servers: long uptime, idle, no open connections |
+| `pier` | Lists everything listening, labeled by project. `--all` includes system noise |
+| `pier watch` | Live `top`-like view. Keys: <kbd>o</kbd> open, <kbd>c</kbd> copy, <kbd>k</kbd> kill, <kbd>/</kbd> filter, <kbd>⏎</kbd> details |
+| `pier info <target>` | Everything pier knows: path, branch, runtime, owners, CPU and memory, command line |
+| `pier url <target>` | Prints the URL, pipe-friendly. `--lan` gives the LAN URL, `--tunnel` the public one |
+| `pier stale` | Finds forgotten dev servers: long uptime, idle, no open connections |
 
-### Act
+### Do things
 
 | Command | What it does |
 |---|---|
-| `pier open <target>` | Opens the service in your browser, switching to an existing tab if one is open. `--editor` opens the project, `--terminal` jumps to the terminal that started it |
-| `pier kill <target>` | Stops the service with SIGTERM, then SIGKILL. Asks first for databases, Docker and system services |
-| `pier prune` | Stops all stale dev servers after one confirmation. `--dry-run` shows what it would stop |
-| `pier qr <target>` | Prints a QR code of the LAN URL in your terminal, for testing on your phone |
+| `pier open <target>` | Opens it in your browser, switching to the existing tab if there is one. `--editor` opens the project, `--terminal` jumps to the terminal that started it |
+| `pier stop <target>` | Stops it cleanly. Databases, Docker and system services ask first |
+| `pier prune` | Stops every stale server after one confirmation. `--dry-run` just shows them |
+| `pier qr <target>` | Prints a QR code of the LAN URL, for testing on your phone |
 | `pier free [port]` | Prints the next free port |
+| `pier pin` / `pier rename` | Keeps a service at the top, or gives it a nicer name (shared with the app) |
 
-### Managed mode
+### Managed mode: logs and real restarts
 
-<img src="assets/mascot/laptop.png" alt="gull on a laptop" width="130" align="right">
-
-When pier starts a service, it can capture logs and restart it exactly.
-
-| Command | What it does |
-|---|---|
-| `pier run` | Runs your `package.json` `dev` script under pier. `pier run -- python app.py` runs any command |
-| `pier logs <target> -f` | Follows a managed service's logs |
-| `pier restart <target>` | Restarts a service. A service pier didn't start is taken over so its logs are captured from now on |
-| `pier up` / `pier down` | Starts or stops a whole stack defined in [`pier.yml`](docs/pier-yml.md) |
-
-### Share & integrate
+When pier starts a server itself, it can keep its logs and restart it exactly.
 
 | Command | What it does |
 |---|---|
-| `pier expose <target>` | Gives you a public HTTPS URL through a Cloudflare quick tunnel (needs `cloudflared`) |
-| `pier mcp` | Runs an MCP server so Claude Code and other agents can see your services, read logs and restart them |
-| `pier completions --install` | Turns on tab completion for live ports and names (zsh, bash, fish) |
-| `pier hello` | Shows the pier gull in your terminal, with a random tip |
+| `pier run` | Runs your `package.json` `dev` script under pier. `pier run -- python app.py` works for anything |
+| `pier logs <target> -f` | Follows the logs |
+| `pier restart <target>` | Restarts it. A server pier didn't start gets adopted, so its logs are captured from then on |
+| `pier up` / `pier down` | Starts or stops a whole stack from [`pier.yml`](docs/pier-yml.md), in dependency order |
 
-Every command supports `--json`. Exit codes: `0` ok, `1` not found or error, `2` ambiguous target.
+### Share and integrate
 
-## Menu bar app
+| Command | What it does |
+|---|---|
+| `pier expose <target>` | A public HTTPS URL through a Cloudflare quick tunnel (needs `cloudflared`) |
+| `pier mcp` | An MCP server, so Claude Code and other agents can see your services, read logs and restart them |
+| `pier completions --install` | Tab completion for live ports and names (zsh, bash, fish; Homebrew installs it for you) |
+| `pier config` | Reads and changes settings shared with the app: editor, hotkey, notifications |
+| `pier hello` | Says hi |
 
-<img src="assets/mascot/waving.png" alt="gull waving" width="130" align="right">
+<p align="center">
+  <img src="assets/screenshots/hello.png" alt="pier hello: the pixel-art gull saluting next to a speech bubble with a tip" width="700">
+</p>
 
-Press <kbd>⌥⌘P</kbd> anywhere, type a few letters and hit <kbd>⏎</kbd> to open a service. You can
-also pin and rename services, see the details panel, view live logs, show a QR code, open the project in
-your editor, jump to its terminal, restart or stop it, or expose it with a tunnel. Optional
-notifications tell you when a managed service crashes.
+## Do I need the app running?
+
+No. The CLI scans your ports itself every time you run it, and servers started with `pier run` live
+in their own small wrapper processes. There's no background daemon.
+
+The menu bar app adds the always-there list, the <kbd>⌥</kbd><kbd>⌘</kbd><kbd>P</kbd> hotkey and crash
+notifications for managed servers (those only arrive while the app is running). Turn on **Launch at
+login** in Pier → Settings if you want it around all the time.
 
 ## Use with Claude Code
 
-<img src="assets/mascot/thinking.png" alt="gull thinking" width="130" align="right">
+<img src="assets/mascot/laptop.png" alt="the pier gull on a laptop" width="120" align="right">
 
 ```bash
 claude mcp add pier -- pier mcp
 ```
 
-Then just ask: *"what's running on my machine?"*, *"start the dev server and wait until it's healthy"*,
-*"show me the last 50 log lines of relay"*.
+Then ask things like *"what's running on my machine?"*, *"start the docs site and wait until it's
+healthy"* or *"show me the last 50 log lines of shop"*. The MCP server can list services, read logs,
+start, restart and stop servers, find free ports and wait for a port to come up. Stopping databases or
+system services always needs explicit confirmation.
 
 ## Works in any terminal
 
-<img src="assets/mascot/coffee.png" alt="gull with coffee" width="130" align="right">
+<img src="assets/mascot/coffee.png" alt="the pier gull with a coffee" width="120" align="right">
 
-Terminal.app, iTerm2, Ghostty, kitty, WezTerm, Warp, Alacritty, VS Code and JetBrains terminals, tmux,
-screen and ssh are all supported. pier respects `NO_COLOR`, `FORCE_COLOR` and `TERM=dumb`, uses
-only the 16 basic colors so it reads well on light and dark themes, and falls back to ASCII when the
-locale isn't UTF-8.
+Terminal.app, iTerm2, Ghostty, kitty, WezTerm, Warp, Alacritty, the VS Code and JetBrains terminals,
+tmux, screen and ssh. pier respects `NO_COLOR`, `FORCE_COLOR` and `TERM=dumb`, uses only the 16
+basic colors so it reads well on light and dark themes, falls back to ASCII when the locale isn't
+UTF-8, and strips escape sequences from page titles before printing them. Even the gull degrades:
+truecolor pixel art, then 256 and 16 colors, then hand-drawn ASCII.
 
 ## How it works
 
-- **Discovery** uses native `libproc` calls (no shelling out to `lsof`) and scans all ports in about 0.1s.
+- **Discovery** uses native `libproc` calls (no shelling out to `lsof`) and scans every port in about 0.1s.
 - **Identification** combines the process's working directory, its arguments, `package.json`,
-  `.git/HEAD`, known infrastructure ports, the Docker Engine API, and a quick HTTP probe for the page
-  title and favicon.
-- **Managed mode** runs your command in a pseudo-terminal, so colors still work. Output goes to a
-  ring buffer served over a unix socket. There's no background daemon.
+  `.git/HEAD`, well-known infrastructure ports, the Docker Engine API and a quick HTTP probe for the
+  page title and favicon.
+- **Managed mode** runs your command in a pseudo-terminal, so colors still work. Output goes to a ring
+  buffer served over a unix socket.
 
-pier is not sandboxed because it needs process info and signals, so it isn't on the Mac App Store.
+pier needs process information and signals, so it can't be sandboxed and isn't on the Mac App Store.
+
+## Contributing
+
+<img src="assets/mascot/waving.png" alt="the pier gull, waving" width="120" align="right">
+
+Bug reports, ideas and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to
+build and test, and [docs/IDEAS.md](docs/IDEAS.md) for what might come next. Please report security
+issues privately, as described in [SECURITY.md](SECURITY.md).
 
 ## License
 

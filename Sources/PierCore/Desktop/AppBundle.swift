@@ -11,7 +11,7 @@ import AppKit
 public enum AppBundle {
     public static let bundleID = "io.github.stepanblaha.pier"
     public static let appName = "Pier"
-    public static let version = "0.1.0"
+    public static let version = PierVersion.current
     /// SwiftPM names a target's resource bundle `<package>_<target>.bundle`; it sits next to the PierApp binary.
     public static let resourceBundleName = "pier_PierApp.bundle"
 

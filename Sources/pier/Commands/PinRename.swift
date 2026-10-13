@@ -101,7 +101,7 @@ struct Unpin: AsyncParsableCommand {
         for n in notPinned { Term.out("\(n) isn't pinned") }
     }
 
-    /// "project:/Users/me/dev/relay" -> "relay (project)".
+    /// "project:/Users/me/dev/shop" -> "shop (project)".
     static func describe(_ key: String) -> String {
         let parts = key.split(separator: ":", maxSplits: 1).map(String.init)
         guard parts.count == 2 else { return Term.clean(key) }
@@ -115,10 +115,10 @@ struct Rename: AsyncParsableCommand {
         abstract: "Give a service a custom display name (or --reset).",
         discussion: """
         The name shows in `pier ls`, `pier info` and the menu bar app. Targets still match the automatic
-        name, so `pier info relay` keeps working after a rename.
+        name, so `pier info shop` keeps working after a rename.
 
-          pier rename 3100 Relay API
-          pier rename relay --reset
+          pier rename 3100 Shop API
+          pier rename shop --reset
         """)
 
     @Argument(help: "Port number or (fuzzy) name.", completion: TargetCompletion.kind) var target: String

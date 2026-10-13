@@ -55,7 +55,7 @@ final class MCPServerTests: XCTestCase {
         XCTAssertEqual(r["id"], 1)
         XCTAssertEqual(r["result"]?["protocolVersion"], "2025-03-26")
         XCTAssertEqual(r["result"]?["serverInfo"]?["name"], "pier")
-        XCTAssertEqual(r["result"]?["serverInfo"]?["version"], "0.1.0")
+        XCTAssertEqual(r["result"]?["serverInfo"]?["version"]?.stringValue, PierVersion.current)
         XCTAssertEqual(r["result"]?["capabilities"]?["tools"]?["listChanged"], false)
         XCTAssertTrue((r["result"]?["instructions"]?.stringValue ?? "").contains("list_services"))
     }

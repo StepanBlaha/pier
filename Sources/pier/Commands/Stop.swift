@@ -11,7 +11,7 @@ struct Stop: AsyncParsableCommand {
         exactly like `pier kill` (SIGTERM, then SIGKILL after 3s; databases, Docker and system services
         ask first).
 
-          pier stop relay
+          pier stop shop
           pier stop 5173 --yes
         """)
 

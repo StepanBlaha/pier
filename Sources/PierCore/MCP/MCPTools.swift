@@ -38,7 +38,7 @@ public enum MCPTools {
 
     private static let targetProp: JSON = [
         "type": "string",
-        "description": "Port number (e.g. \"3000\", always exact) or a fuzzy name matched against page title, project, framework, infra or process name (e.g. \"relay\", \"next\", \"postgres\").",
+        "description": "Port number (e.g. \"3000\", always exact) or a fuzzy name matched against page title, project, framework, infra or process name (e.g. \"shop\", \"next\", \"postgres\").",
     ]
 
     // MARK: Summaries

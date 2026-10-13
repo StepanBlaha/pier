@@ -1,0 +1,46 @@
+name: Bug report
+description: Something in pier doesn't work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting! Please replace project names or paths you don't want public.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Command output
+      description: The failing command and its output. `--json` output helps for identification bugs.
+      render: shell
+  - type: dropdown
+    id: part
+    attributes:
+      label: Which part?
+      options: [CLI, Menu bar app, pier watch, Managed mode (run/logs/restart), Stacks (pier.yml), MCP server, Install / Homebrew, Other]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: pier version
+      placeholder: output of `pier --version`
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: e.g. macOS 15.3
+    validations:
+      required: true
+  - type: input
+    id: terminal
+    attributes:
+      label: Terminal (for CLI issues)
+      placeholder: e.g. iTerm2 3.5 + tmux, Ghostty, VS Code terminal
