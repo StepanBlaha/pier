@@ -16,14 +16,14 @@ struct Pier: AsyncParsableCommand {
           pier                       list everything (same as `pier ls`)
           pier watch                 live view; o open, k kill, enter info, q quit
           pier ls --all              include hidden system / app-helper noise
-          pier info shop            path, branch, runtime, owners, CPU/RAM
-          pier open shop --lan      open the LAN URL
+          pier info shop             path, branch, runtime, owners, CPU/RAM
+          pier open shop --lan       open the LAN URL
           pier url 3100 | pbcopy     copy a URL
           pier kill 3000             free a stuck port (SIGTERM, then SIGKILL)
-          pier stop shop            stop cleanly (managed) or like kill
-          pier pin shop             pin to the top; `pier rename 3100 My API`
+          pier stop shop             stop cleanly (managed) or like kill
+          pier pin shop              pin to the top; `pier rename 3100 My API`
           pier free 5173             next free port from 5173
-          pier qr shop              QR of the LAN URL for phone testing
+          pier qr shop               QR of the LAN URL for phone testing
           pier stale --days 3        forgotten dev servers; `pier prune` kills them
           pier config set editor cursor   app + CLI settings
           pier completions --install enable <TAB> completion of ports and names
@@ -32,10 +32,10 @@ struct Pier: AsyncParsableCommand {
         MANAGED & SHARING
           pier run                   run package.json "dev" managed (logs + restart)
           pier run -- python app.py  run any command managed
-          pier logs shop -f         follow logs of a managed service
-          pier restart shop         restart (adopts unmanaged services)
+          pier logs shop -f          follow logs of a managed service
+          pier restart shop          restart (adopts unmanaged services)
           pier up / pier down        start / stop a pier.yml stack
-          pier expose shop          public https URL via cloudflared
+          pier expose shop           public https URL via cloudflared
           pier mcp                   MCP server for Claude Code
           pier app install           install the menu bar app
 
@@ -56,6 +56,8 @@ struct Pier: AsyncParsableCommand {
     /// Ignore SIGPIPE first (so `pier ls | head -1` ends quietly), then run normally.
     static func main() async {
         Term.bootstrap()
+        let args = Array(CommandLine.arguments.dropFirst())
+        if args == ["help"] || args == ["--help"] || args == ["-h"] { HelpBanner.print() }
         await Self.main(nil)
     }
 }

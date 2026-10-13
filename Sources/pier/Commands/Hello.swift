@@ -49,3 +49,17 @@ enum MascotUI {
 
     static func hint(_ s: String) -> String { Term.paint(s, .dim) }
 }
+
+/// The saluting gull with a speech bubble above the root `pier help` (interactive terminals only, so piped
+/// help stays plain text; PIER_NO_MASCOT=1 hides it).
+enum HelpBanner {
+    static func print() {
+        let env = ProcessInfo.processInfo.environment
+        let caps = Term.caps
+        guard Mascot.enabled(caps: caps, env: env) else { return }
+        let version = Pier.configuration.version
+        let lines = MascotHello.greeting(pose: .saluting, text: MascotHello.helpBubbleText(version: version),
+                                         caps: caps, showMascot: true)
+        Term.out(lines.joined(separator: "\n") + "\n")
+    }
+}

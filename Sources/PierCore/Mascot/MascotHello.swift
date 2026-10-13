@@ -32,12 +32,25 @@ public enum MascotHello {
     /// (>= 70 columns: medium gull; >= 56: small gull); 40-55 columns stack the small gull above the text;
     /// narrower terminals (or `showMascot: false`) get just the text. The repo URL is never split.
     public static func lines(pose: MascotPose, version: String, tip: String, caps: TermCaps, showMascot: Bool) -> [String] {
-        let text = bubbleText(version: version, tip: tip)
+        greeting(pose: pose, text: bubbleText(version: version, tip: tip), keepWhole: Mascot.repoURL,
+                 caps: caps, showMascot: showMascot)
+    }
+
+    /// The bubble text shown above `pier help`.
+    public static func helpBubbleText(version: String) -> [String] {
+        ["Ahoy! Here's everything I can do. (pier \(version))", "",
+         "Run `pier` to see what's listening, or", "`pier help <command>` for the details."]
+    }
+
+    /// Gull + speech bubble layout shared by `pier hello` and `pier help`. `keepWhole` is the longest string
+    /// that must never wrap (e.g. a URL); the bubble is always at least that wide.
+    public static func greeting(pose: MascotPose, text: [String], keepWhole: String? = nil,
+                                caps: TermCaps, showMascot: Bool) -> [String] {
         let style = MascotStyle(caps: caps)
         let width = caps.width
         func plainText() -> [String] { text.flatMap { Mascot.wrap($0, width: max(20, width - 1), breakLongWords: false) } }
         guard showMascot, width >= Mascot.minTerminalWidth else { return plainText() }
-        let urlBubble = Mascot.repoURL.count + 4
+        let urlBubble = max(keepWhole.map { DisplayWidth.of($0) } ?? 0, 24) + 4
         let medium = Mascot.render(pose, .medium, style: style)
         let small = Mascot.render(pose, .small, style: style)
         func widthOf(_ a: [String]) -> Int { a.map { AnsiText.width($0) }.max() ?? 0 }

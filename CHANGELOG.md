@@ -5,6 +5,18 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-10-13
+
+### Added
+- `pier help` greets you with the saluting gull and a speech bubble (interactive terminals only; piped
+  help stays plain, `PIER_NO_MASCOT=1` hides it).
+
+### Changed
+- No em or en dashes anywhere in output, docs or screenshots.
+
+### Fixed
+- Help examples were misaligned by one column.
+
 ## [0.1.1] - 2026-10-13
 
 ### Fixed
@@ -29,6 +41,7 @@ First release.
 - **MCP server** for Claude Code and other agents.
 - Works in any terminal, with a pixel-art gull that degrades to ASCII.
 
-[Unreleased]: https://github.com/StepanBlaha/pier/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/StepanBlaha/pier/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/StepanBlaha/pier/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/StepanBlaha/pier/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/StepanBlaha/pier/releases/tag/v0.1.0

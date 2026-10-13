@@ -135,7 +135,7 @@ When pier starts a server itself, it can keep its logs and restart it exactly.
 | `pier mcp` | An MCP server, so Claude Code and other agents can see your services, read logs and restart them |
 | `pier completions --install` | Tab completion for live ports and names (zsh, bash, fish; Homebrew installs it for you) |
 | `pier config` | Reads and changes settings shared with the app: editor, hotkey, notifications |
-| `pier hello` | Says hi |
+| `pier hello` | Says hi. The gull also salutes you on `pier help` |
 
 <p align="center">
   <img src="assets/screenshots/hello.png" alt="pier hello: the pixel-art gull saluting next to a speech bubble with a tip" width="700">

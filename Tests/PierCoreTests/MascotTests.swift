@@ -192,6 +192,20 @@ final class MascotSceneTests: XCTestCase {
         XCTAssertEqual(Mascot.wrap("", width: 10), [""])
     }
 
+    func testHelpBannerFitsAndKeepsTextAtEveryWidth() {
+        for cols in [40, 56, 70, 100, 200] {
+            for unicode in [true, false] {
+                let c = caps(unicode: unicode, cols: cols)
+                let lines = MascotHello.greeting(pose: .saluting, text: MascotHello.helpBubbleText(version: "9.9.9"),
+                                                 caps: c, showMascot: true)
+                let joined = lines.map { AnsiText.strip($0) }.joined(separator: " ")
+                XCTAssertTrue(joined.contains("9.9.9"), "cols \(cols)")
+                XCTAssertTrue(joined.contains("pier help <command>") || joined.contains("<command>"), "cols \(cols)")
+                for l in lines { XCTAssertLessThanOrEqual(AnsiText.width(l), cols, "cols \(cols): \(l)") }
+            }
+        }
+    }
+
     func testHelloContainsVersionTipAndRepoAtEveryWidth() {
         for cols in [30, 40, 55, 70, 100, 160] {
             for c in [caps(cols: cols), caps(color: .none, cols: cols), caps(unicode: false, cols: cols)] {
