@@ -68,7 +68,7 @@ public enum EditorOpener {
         case .appName(let name):
             let r = DesktopProc.open(["-a", name, expanded])
             if !r.ok {
-                throw DesktopError("could not open '\(name)' (not an installed app?) — set `editor` to vscode, cursor, zed, windsurf, finder, an app name or a bundle id")
+                throw DesktopError("could not open '\(name)' (not an installed app?); set `editor` to vscode, cursor, zed, windsurf, finder, an app name or a bundle id")
             }
         }
     }

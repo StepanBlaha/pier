@@ -218,7 +218,7 @@ public enum AppBundle {
         return dest
     }
 
-    /// Writes the bundle into `app` (must not exist). No quitting, no swapping — used by `install` and tests.
+    /// Writes the bundle into `app` (must not exist). No quitting, no swapping. Used by `install` and tests.
     static func assemble(at app: URL, binaries: Binaries, options: InstallOptions) throws {
         let fm = FileManager.default
         guard fm.isExecutableFile(atPath: binaries.app.path) else { throw DesktopError("PierApp binary not found at \(binaries.app.path)") }
@@ -257,7 +257,7 @@ public enum AppBundle {
         NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).filter { !$0.isTerminated }
     }
 
-    /// Asks Pier to quit (managed processes keep running — they are owned by their own `pier run` wrappers).
+    /// Asks Pier to quit (managed processes keep running; they are owned by their own `pier run` wrappers).
     /// Returns true if nothing is running afterwards.
     @discardableResult
     public static func quitRunningPier(timeout: TimeInterval = 4) -> Bool {

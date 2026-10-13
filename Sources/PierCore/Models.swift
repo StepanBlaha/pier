@@ -1,6 +1,6 @@
 import Foundation
 
-// Shared data contracts. Every module reads/writes these — change only with care.
+// Shared data contracts. Every module reads/writes these, so change only with care.
 
 public enum IPFamily: String, Codable, Sendable { case v4, v6 }
 
@@ -48,7 +48,7 @@ public struct ProcInfo: Hashable, Codable, Sendable {
 public enum BindScope: String, Codable, Sendable {
     /// 127.0.0.1 / ::1 only.
     case loopback
-    /// 0.0.0.0 / :: — reachable from LAN.
+    /// 0.0.0.0 / ::, reachable from LAN.
     case all
     /// Bound to a specific non-loopback interface address.
     case specific

@@ -10,7 +10,7 @@ enum Pose: String, CaseIterable {
 
 /// Loads the mascot PNGs from pier_PierApp.bundle (SwiftPM resource bundle). Never calls `Bundle.module`: its
 /// generated accessor `fatalError`s when the bundle is missing, and a bundle at the .app root breaks codesign.
-/// Lookup order: Pier.app/Contents/Resources, the directory of the executable (dev builds), else nothing — views
+/// Lookup order: Pier.app/Contents/Resources, the directory of the executable (dev builds), else nothing; views
 /// that need a mascot then just omit it.
 enum MascotImages {
     static let bundleName = "pier_PierApp.bundle"

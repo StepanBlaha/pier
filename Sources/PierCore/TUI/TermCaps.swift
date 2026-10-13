@@ -24,7 +24,7 @@ public struct Glyphs: Equatable, Sendable {
     public var openQuote: String
     public var closeQuote: String
 
-    public static let unicode = Glyphs(bullet: "●", ellipsis: "…", chevron: "›", sep: "·", dash: "—", selector: "▸",
+    public static let unicode = Glyphs(bullet: "●", ellipsis: "…", chevron: "›", sep: "·", dash: "-", selector: "▸",
                                        cursor: "█", refresh: "⟳", enter: "⏎", arrows: "↑↓", rule: "─",
                                        openQuote: "“", closeQuote: "”")
     public static let ascii = Glyphs(bullet: "*", ellipsis: "...", chevron: ">", sep: "|", dash: "-", selector: ">",

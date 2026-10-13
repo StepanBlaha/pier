@@ -1,6 +1,6 @@
 import Foundation
 
-/// ~/Library/Application Support/pier/config.json — shared by CLI and app. Unknown keys tolerated, missing keys defaulted.
+/// ~/Library/Application Support/pier/config.json, shared by CLI and app. Unknown keys tolerated, missing keys defaulted.
 public struct PierConfig: Codable, Equatable, Sendable {
     /// Service.stableKey values, in pin order.
     public var pins: [String] = []

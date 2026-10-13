@@ -1,4 +1,4 @@
-# pier — ideas backlog
+# pier: ideas backlog
 
 Beyond SPEC.md v1. ⭐ = strong candidate (high value / low cost or unique).
 

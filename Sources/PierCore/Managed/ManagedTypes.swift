@@ -1,13 +1,13 @@
 import Foundation
 
-// CONTRACT — shared by `pier run` (wrapper), logs/restart, MCP, stacks and the app.
+// CONTRACT: shared by `pier run` (wrapper), logs/restart, MCP, stacks and the app.
 // Owner of implementations: Managed agent. Types here are final; change only with care.
 
 /// Written by each `pier run` wrapper to ManagedPaths.runDir/<id>.json; removed on clean exit.
 public struct ManagedManifest: Codable, Hashable, Sendable, Identifiable {
     public enum State: String, Codable, Sendable { case starting, running, restarting, exited, crashed }
 
-    /// Short random id (8 chars, [a-z0-9]) — keeps unix socket paths under the 104-byte limit.
+    /// Short random id (8 chars, [a-z0-9]), which keeps unix socket paths under the 104-byte limit.
     public var id: String
     /// Display name; defaults to the cwd's project folder name.
     public var name: String

@@ -9,7 +9,7 @@ public enum TunnelError: Error, LocalizedError, CustomStringConvertible {
 
     public var description: String {
         switch self {
-        case .cloudflaredMissing: return "cloudflared not installed — brew install cloudflared"
+        case .cloudflaredMissing: return "cloudflared not installed (brew install cloudflared)"
         case .spawnFailed(let s): return "could not start cloudflared: \(s)"
         case .noURL(let s): return s
         case .notExposed(let p): return "no pier tunnel for :\(p)"

@@ -219,7 +219,7 @@ final class TunnelDetectorTests: XCTestCase {
             _ = try await TunnelLauncher.expose(port: 59125)
             XCTFail("expected error")
         } catch {
-            XCTAssertEqual("\(error)", "cloudflared not installed — brew install cloudflared")
+            XCTAssertEqual("\(error)", "cloudflared not installed (brew install cloudflared)")
         }
     }
 

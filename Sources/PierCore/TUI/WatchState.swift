@@ -271,7 +271,7 @@ public struct WatchState {
         case .terminated: return ("killed \(l)", false)
         case .killed: return ("force-killed \(l)", false)
         case .alreadyGone: return ("\(l) already exited", false)
-        case .permissionDenied: return ("permission denied — use `pier kill` in a shell", true)
+        case .permissionDenied: return ("permission denied: use `pier kill` in a shell", true)
         case .stillRunning: return ("\(l) is still running after SIGKILL", true)
         case .failed(let e): return ("kill failed: \(String(cString: strerror(e)))", true)
         }

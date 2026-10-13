@@ -144,7 +144,7 @@ public enum Identifier {
         return pickLAN(from: candidates)
     }
 
-    /// True if the service is known not to speak HTTP (Postgres, Redis, Mongo, MySQL...) — skip probing.
+    /// True if the service is known not to speak HTTP (Postgres, Redis, Mongo, MySQL...), so probing is skipped.
     public static func isKnownNonHTTP(_ s: Service) -> Bool {
         let rule = s.infraName.flatMap(InfraDetector.rule(named:))
         guard let rule else { return false }

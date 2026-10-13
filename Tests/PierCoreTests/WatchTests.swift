@@ -207,7 +207,7 @@ final class WatchStateTests: XCTestCase {
         let s = svc(3100, title: "relay-crm", project: "relay-crm")
         XCTAssertEqual(WatchState.killMessage(.terminated, for: s).0, "killed relay-crm (:3100)")
         let denied = WatchState.killMessage(.permissionDenied, for: s)
-        XCTAssertEqual(denied.0, "permission denied — use `pier kill` in a shell")
+        XCTAssertEqual(denied.0, "permission denied: use `pier kill` in a shell")
         XCTAssertTrue(denied.1)
     }
 
@@ -250,7 +250,7 @@ final class WatchRendererTests: XCTestCase {
     func testHeaderTableAndFooter() {
         let st = loaded()
         let lines = check(st)
-        XCTAssertTrue(lines[0].hasPrefix("pier watch — 4 services · refreshed "), lines[0])
+        XCTAssertTrue(lines[0].hasPrefix("pier watch - 4 services · refreshed "), lines[0])
         XCTAssertTrue(lines[0].contains("⟳ every 2s"))
         XCTAssertTrue(lines[0].hasSuffix("⏎ details  q quit"))
         for h in ["PORT", "NAME", "PROJECT", "FRAMEWORK/INFRA", "HEALTH", "BIND", "UPTIME", "CPU%", "MEM"] { XCTAssertTrue(lines[1].contains(h), h) }

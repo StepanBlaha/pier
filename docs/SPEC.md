@@ -1,4 +1,4 @@
-# pier — spec (v1)
+# pier: spec (v1)
 
 > Browse, identify and control everything listening on localhost. macOS menu bar app + CLI.
 
@@ -137,7 +137,7 @@ pier app install             # copy Pier.app to ~/Applications, enable launch-at
 
 - **M1, Core + CLI**
   - libproc scan.
-  - Identification signals 1–3, 7–11, 13, 14.
+  - Identification signals 1-3, 7-11, 13, 14.
   - Commands `ls/info/open/kill/url/free/qr` with `--json`.
   - The CLI is useful on its own at this point.
 - **M2, Menu bar app**
