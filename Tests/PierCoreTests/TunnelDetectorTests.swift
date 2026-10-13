@@ -3,6 +3,8 @@ import Darwin
 @testable import PierCore
 
 final class TunnelDetectorTests: XCTestCase {
+    override class func setUp() { super.setUp(); signal(SIGPIPE, SIG_IGN) }  // fake servers may write to closed peers
+
     // MARK: Parsers
 
     func testParseLocalPort() {

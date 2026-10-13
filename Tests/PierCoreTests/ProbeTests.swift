@@ -62,6 +62,8 @@ final class TestServer: @unchecked Sendable {
 }
 
 final class ProbeTests: XCTestCase {
+    override class func setUp() { super.setUp(); signal(SIGPIPE, SIG_IGN) }  // fake servers may write to closed peers
+
     func testHTMLTitleAndFavicon() async throws {
         let s = try TestServer.http(headers: "Content-Type: text/html; charset=utf-8\r\nServer: TestSrv/1\r\n",
                                     body: "<!doctype html><html><head>\n<TITLE data-x=1>  Haf &amp;\n Pet &#39;&#x41; </TITLE>\n<link rel=\"icon\" href=\"/static/fav.png\"></head><body></body></html>")

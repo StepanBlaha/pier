@@ -17,6 +17,8 @@ private func svc(port: UInt16 = 3000, pid: Int32 = 500, kind: ServiceKind = .dev
 }
 
 final class StaleEvaluateTests: XCTestCase {
+    override class func setUp() { super.setUp(); signal(SIGPIPE, SIG_IGN) }  // fake servers may write to closed peers
+
     private let week: TimeInterval = 3 * 86_400
 
     func testOldIdleDevServerIsStale() {
@@ -86,6 +88,8 @@ final class StaleEvaluateTests: XCTestCase {
 }
 
 final class StaleConnectionsTests: XCTestCase {
+    override class func setUp() { super.setUp(); signal(SIGPIPE, SIG_IGN) }  // fake servers may write to closed peers
+
     /// Real loopback listener + client in this process: counts the accepted ESTABLISHED socket.
     func testEstablishedCountOnLoopback() throws {
         let lfd = socket(AF_INET, SOCK_STREAM, 0)
@@ -110,6 +114,7 @@ final class StaleConnectionsTests: XCTestCase {
         let conn = withUnsafePointer(to: &addr) { $0.withMemoryRebound(to: sockaddr.self, capacity: 1) { connect(cfd, $0, len) } }
         XCTAssertEqual(conn, 0)
         let afd = accept(lfd, nil, nil)
+        var nosig: Int32 = 1; setsockopt(afd, SOL_SOCKET, SO_NOSIGPIPE, &nosig, socklen_t(MemoryLayout<Int32>.size))
         XCTAssertGreaterThan(afd, 0)
         defer { close(afd) }
         // Server-side accepted socket has local port == listener port.

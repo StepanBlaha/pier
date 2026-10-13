@@ -52,6 +52,7 @@ final class DockerFakeServer: @unchecked Sendable {
     private func acceptLoop() {
         while true {
             let c = accept(listenFD, nil, nil)
+            var nosig: Int32 = 1; setsockopt(c, SOL_SOCKET, SO_NOSIGPIPE, &nosig, socklen_t(MemoryLayout<Int32>.size))
             if c < 0 { return }
             lock.lock(); clients.append(c); lock.unlock()
             Thread.detachNewThread { [self] in serve(c) }
@@ -109,6 +110,8 @@ final class DockerFakeServer: @unchecked Sendable {
 }
 
 final class DockerMapperTests: XCTestCase {
+    override class func setUp() { super.setUp(); signal(SIGPIPE, SIG_IGN) }  // fake servers may write to closed peers
+
     static let fixture = """
     [
       {"Id":"abc123def4567890","Names":["/relay-db"],"Image":"postgres:16","Ports":[
