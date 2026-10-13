@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode
+        run: sudo xcode-select -s "$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)"
+      - name: Toolchain
+        run: swift --version
+      - name: Build
+        run: swift build --product pier && swift build --product PierApp
+      - name: Test
+        run: swift test
+      - name: Smoke
+        run: |
+          .build/debug/pier --version
+          .build/debug/pier ls --no-probe
+          .build/debug/pier help >/dev/null
