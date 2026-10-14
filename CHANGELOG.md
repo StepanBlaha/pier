@@ -5,6 +5,9 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Landing page at https://stepanblaha.github.io/pier/ (source in `site/`).
+
 ## [0.1.2] - 2026-10-13
 
 ### Added

@@ -33,6 +33,7 @@ swift test                       # the whole suite
 | `packaging/` | App bundle, icon, Homebrew formula template, release scripts |
 | `tools/` | Asset generators (terminal mascot art, README terminal screenshots) |
 | `docs/` | `pier.yml` reference, the original spec, the ideas backlog |
+| `site/` | The landing page at [stepanblaha.github.io/pier](https://stepanblaha.github.io/pier/) (Next.js static export, deployed by `.github/workflows/site.yml`) |
 
 ## Pull requests
 
