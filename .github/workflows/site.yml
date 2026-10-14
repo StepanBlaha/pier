@@ -31,7 +31,8 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - name: Build static export
-        run: npx next build
+        # next/font downloads Google Fonts at build time; retry once if the network blips.
+        run: npx next build || (sleep 15 && npx next build)
         env:
           NEXT_PUBLIC_BASE_PATH: /pier
           NEXT_PUBLIC_SITE_URL: https://stepanblaha.github.io/pier
