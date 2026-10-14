@@ -4,9 +4,7 @@
   flex-direction: column;
   min-height: 100svh;
   overflow: clip;
-  background:
-    radial-gradient(closest-side at 80% 20%, rgba(35, 80, 168, 0.14), rgba(35, 80, 168, 0)) no-repeat,
-    var(--cream);
+  background: var(--cream);
 }
 
 .bar { display: flex; align-items: center; height: 68px; }

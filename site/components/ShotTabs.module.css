@@ -1,7 +1,30 @@
-.wrap { grid-template-columns: minmax(0, 1fr); display: grid; gap: 20px; justify-items: center; min-width: 0; }
+.wrap { grid-template-columns: minmax(0, 1fr); display: grid; gap: 24px; justify-items: center; min-width: 0; }
 
-.tabs { display: inline-flex; gap: 6px; padding: 5px; border-radius: 999px; background: var(--paper); border: 1.5px solid var(--line); box-shadow: var(--shadow); }
+/* Segmented control with a navy pill that slides to the active tab. */
+.tabs {
+  position: relative;
+  display: inline-flex;
+  gap: 6px;
+  padding: 5px;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.pill {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 0;
+  width: var(--w, 0);
+  transform: translateX(var(--x, 0));
+  border-radius: 999px;
+  background: var(--navy);
+  transition: transform 0.42s var(--ease-out), width 0.42s var(--ease-out), opacity 0.2s;
+}
 .tab {
+  position: relative;
+  z-index: 1;
   min-height: 44px;
   padding: 0 20px;
   border: 0;
@@ -12,14 +35,40 @@
   font-size: 0.92rem;
   font-weight: 600;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.18s var(--ease-out), color 0.18s var(--ease-out);
+  transition: color 0.3s var(--ease-out), background-color 0.18s var(--ease-out);
 }
-.active { background: var(--navy); color: var(--cream); }
+.active { color: var(--cream); }
 @media (hover: hover) and (pointer: fine) {
-  .tab:hover { background: var(--navy); color: var(--cream); }
+  .tab:not(.active):hover { background: var(--cream-2); }
 }
-.tab:active { background: var(--navy); color: var(--cream); }
+.tab:not(.active):active { background: var(--cream-2); }
 
-.panel { width: 100%; max-width: 1100px; }
-.panel[hidden] { display: none; }
+/* Both screenshots share one grid cell; the stage keeps the taller one's height, so nothing jumps. */
+.stage { display: grid; width: 100%; max-width: 1100px; }
+.panel { grid-area: 1 / 1; align-self: center; will-change: transform, opacity, clip-path; }
 .shot { width: 100%; height: auto; filter: drop-shadow(0 26px 40px rgba(13, 27, 76, 0.24)); }
+
+.gone {
+  opacity: 0;
+  transform: translateX(calc(var(--dir, 1) * -40px)) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.32s var(--ease-out), transform 0.42s var(--ease-out);
+}
+.shown {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0 round 22px);
+  transition: opacity 0.4s var(--ease-out) 0.1s, transform 0.55s var(--ease-out) 0.1s;
+  animation: printIn 0.7s var(--ease-out) 0.1s both;
+}
+/* The incoming terminal "prints" from the top, like output appearing. */
+@keyframes printIn {
+  from { clip-path: inset(0 0 100% 0 round 22px); transform: translateX(calc(var(--dir, 1) * 40px)) scale(0.985); }
+  60% { clip-path: inset(0 0 0 0 round 22px); }
+  to { clip-path: inset(0 0 0 0 round 22px); transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill, .gone, .shown { transition: none; animation: none; }
+  .shown { clip-path: none; }
+}

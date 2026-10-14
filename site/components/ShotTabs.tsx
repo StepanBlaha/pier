@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import Image from "next/image";
 import ls from "@/public/shots/ls.webp";
 import hello from "@/public/shots/hello.webp";
@@ -23,7 +23,28 @@ const TABS = [
 
 export default function ShotTabs() {
   const [active, setActive] = useState(0);
+  // +1 when moving right (pier -> pier hello), -1 when moving left: panels slide accordingly.
+  const [dir, setDir] = useState(1);
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [pill, setPill] = useState<{ x: number; w: number } | null>(null);
+
+  const select = (i: number) => {
+    if (i === active) return;
+    setDir(i > active ? 1 : -1);
+    setActive(i);
+  };
+
+  // Sliding pill: measure the active tab (and re-measure on resize / font load).
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = refs.current[active];
+      if (el) setPill({ x: el.offsetLeft, w: el.offsetWidth });
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    document.fonts?.ready.then(measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [active]);
 
   const onKey = (e: KeyboardEvent) => {
     let next = active;
@@ -33,13 +54,18 @@ export default function ShotTabs() {
     else if (e.key === "End") next = TABS.length - 1;
     else return;
     e.preventDefault();
-    setActive(next);
+    select(next);
     refs.current[next]?.focus();
   };
 
   return (
     <div className={styles.wrap}>
       <div className={styles.tabs} role="tablist" aria-label="CLI examples" onKeyDown={onKey}>
+        <span
+          className={styles.pill}
+          aria-hidden="true"
+          style={pill ? ({ "--x": `${pill.x}px`, "--w": `${pill.w}px` } as CSSProperties) : { opacity: 0 }}
+        />
         {TABS.map((t, i) => (
           <button
             key={t.id}
@@ -51,24 +77,27 @@ export default function ShotTabs() {
             aria-controls={`shot-panel-${t.id}`}
             tabIndex={active === i ? 0 : -1}
             className={`${styles.tab} ${active === i ? styles.active : ""}`}
-            onClick={() => setActive(i)}
+            onClick={() => select(i)}
           >
             {t.label}
           </button>
         ))}
       </div>
-      {TABS.map((t, i) => (
-        <div
-          key={t.id}
-          role="tabpanel"
-          id={`shot-panel-${t.id}`}
-          aria-labelledby={`shot-tab-${t.id}`}
-          hidden={active !== i}
-          className={styles.panel}
-        >
-          <Image src={t.src} alt={t.alt} className={styles.shot} sizes="(max-width: 1200px) 94vw, 1100px" />
-        </div>
-      ))}
+      <div className={styles.stage} style={{ "--dir": dir } as CSSProperties}>
+        {TABS.map((t, i) => (
+          <div
+            key={t.id}
+            role="tabpanel"
+            id={`shot-panel-${t.id}`}
+            aria-labelledby={`shot-tab-${t.id}`}
+            aria-hidden={active !== i}
+            inert={active !== i}
+            className={`${styles.panel} ${active === i ? styles.shown : styles.gone}`}
+          >
+            <Image src={t.src} alt={t.alt} className={styles.shot} sizes="(max-width: 1200px) 94vw, 1100px" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

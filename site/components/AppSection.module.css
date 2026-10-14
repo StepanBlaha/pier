@@ -17,7 +17,7 @@
   margin-inline: auto;
   padding: 12px 12px 20px;
   border-radius: var(--radius-l);
-  background: linear-gradient(160deg, #c9d9f5 0%, #e5ecfa 55%, #f4efdc 100%);
+  background: #dfe8f8;
   box-shadow: var(--shadow-l);
 }
 

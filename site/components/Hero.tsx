@@ -2,7 +2,6 @@ import Image from "next/image";
 import CommandBox from "./CommandBox";
 import ButtonLink from "./Button";
 import GithubIcon from "./GithubIcon";
-import Parallax from "./Parallax";
 import SpeechBubble from "./SpeechBubble";
 import { BREW_INSTALL, REPO_URL } from "@/lib/site";
 import saluting from "@/public/mascot/saluting.webp";
@@ -16,20 +15,16 @@ const LINES = [
 ];
 
 const CHIPS = [
-  { port: ":3000", name: "Next.js", pos: "c1", distance: -36, delay: 0.55, bob: 5.2 },
-  { port: ":5173", name: "Vite", pos: "c2", distance: -70, delay: 0.7, bob: 6.1 },
-  { port: ":8000", name: "FastAPI", pos: "c3", distance: -24, delay: 0.85, bob: 5.6 },
-  { port: ":5432", name: "PostgreSQL", pos: "c4", distance: -58, delay: 1.0, bob: 6.6 },
-  { port: ":11434", name: "Ollama", pos: "c5", distance: -88, delay: 1.15, bob: 5.9 },
+  { port: ":3000", name: "Next.js", pos: "c1", delay: 0.55 },
+  { port: ":5173", name: "Vite", pos: "c2", delay: 0.7 },
+  { port: ":8000", name: "FastAPI", pos: "c3", delay: 0.85 },
+  { port: ":5432", name: "PostgreSQL", pos: "c4", delay: 1.0 },
+  { port: ":11434", name: "Ollama", pos: "c5", delay: 1.15 },
 ] as const;
 
 export default function Hero() {
   return (
     <section id="top" className={styles.hero} aria-labelledby="hero-title">
-      <div className={styles.blobs} aria-hidden="true">
-        <span className={styles.blobBlue} />
-        <span className={styles.blobYellow} />
-      </div>
 
       <div className={`container ${styles.grid}`}>
         <div className={styles.copy}>
@@ -56,9 +51,8 @@ export default function Hero() {
           </div>
 
           <div className={styles.gullWrap}>
-            <Parallax distance={26} className={styles.gullPar}>
+            <div className={styles.gullPar}>
               <div className={styles.gullIn}>
-                <div className={styles.gullBreath}>
                   <Image
                     src={saluting}
                     alt="The pier gull, a seagull in a sailor hat, giving a salute"
@@ -66,19 +60,18 @@ export default function Hero() {
                     sizes="(max-width: 900px) 300px, 440px"
                     preload
                   />
-                </div>
               </div>
-            </Parallax>
+            </div>
 
             <div aria-hidden="true">
               {CHIPS.map((c) => (
-                <Parallax key={c.port} distance={c.distance} className={`${styles.chipPos} ${styles[c.pos]}`}>
-                  <div className={styles.chip} style={{ "--d": `${c.delay}s`, "--b": `${c.bob}s` } as React.CSSProperties}>
+                <div key={c.port} className={`${styles.chipPos} ${styles[c.pos]}`}>
+                  <div className={styles.chip} style={{ "--d": `${c.delay}s` } as React.CSSProperties}>
                     <span className={styles.dot} />
                     <b className={styles.chipPort}>{c.port}</b>
                     <span>{c.name}</span>
                   </div>
-                </Parallax>
+                </div>
               ))}
             </div>
           </div>

@@ -6,7 +6,7 @@
   aspect-ratio: 1.15;
   overflow: hidden;
   border-radius: var(--radius-l);
-  background: linear-gradient(160deg, #dde7fa 0%, #eef3fc 100%);
+  background: #e6edfa;
   box-shadow: inset 0 0 0 1.5px rgba(35, 80, 168, 0.12);
 }
 /* The gull art is cropped at its left and bottom edges, so it is mirrored into the tile's bottom right corner. */
