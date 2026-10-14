@@ -7,7 +7,7 @@ final class TestServer: @unchecked Sendable {
     let port: UInt16
     private let listenFD: Int32
     private let lock = NSLock()
-    private var clients: [Int32] = []
+    private var clients: Set<Int32> = []
 
     init(handler: @escaping @Sendable (Int32) -> Void) throws {
         let fd = socket(AF_INET, SOCK_STREAM, 0)
@@ -33,15 +33,25 @@ final class TestServer: @unchecked Sendable {
                 if c < 0 { return }
                 var one: Int32 = 1
                 setsockopt(c, SOL_SOCKET, SO_NOSIGPIPE, &one, socklen_t(MemoryLayout<Int32>.size))
-                self?.lock.withLock { self?.clients.append(c) }
-                Thread.detachNewThread { handler(c) }
+                self?.lock.withLock { self?.clients.insert(c) }
+                // Handlers never close: the server closes each connection exactly once (here or in stop()),
+                // so a late handler can't close a descriptor number the test runner has since reused.
+                Thread.detachNewThread { [weak self] in handler(c); self?.release(c) }
             }
         }
     }
 
     func stop() {
         shutdown(listenFD, SHUT_RDWR); close(listenFD)
-        lock.withLock { clients.forEach { shutdown($0, SHUT_RDWR); close($0) } }
+        lock.withLock {
+            clients.forEach { shutdown($0, SHUT_RDWR); close($0) }
+            clients.removeAll()
+        }
+    }
+
+    /// Close `fd` if this server still owns it (no-op after stop()).
+    private func release(_ fd: Int32) {
+        lock.withLock { if clients.remove(fd) != nil { close(fd) } }
     }
 
     /// Serves a fixed raw response to every request, then closes.
@@ -52,7 +62,6 @@ final class TestServer: @unchecked Sendable {
             let req = n > 0 ? String(decoding: buf[..<n], as: UTF8.self) : ""
             let out = Array(raw(req).utf8)
             _ = write(fd, out, out.count)
-            close(fd)
         }
     }
 
@@ -101,7 +110,7 @@ final class ProbeTests: XCTestCase {
     }
 
     func testAcceptButNeverRespond() async throws {
-        let s = try TestServer { fd in sleep(5); close(fd) }
+        let s = try TestServer { _ in sleep(5) }
         defer { s.stop() }
         let t0 = Date()
         let r = await Prober.probe(port: s.port, timeout: 0.3)
@@ -112,7 +121,7 @@ final class ProbeTests: XCTestCase {
 
     func testServerFirstBanner() async throws {
         let s = try TestServer { fd in
-            let b = Array("SSH-2.0-test\r\n".utf8); _ = write(fd, b, b.count); sleep(1); close(fd)
+            let b = Array("SSH-2.0-test\r\n".utf8); _ = write(fd, b, b.count); sleep(1)
         }
         defer { s.stop() }
         let r = await Prober.probe(port: s.port)
@@ -179,7 +188,7 @@ final class ProbeTests: XCTestCase {
             var buf = [UInt8](repeating: 0, count: 4096); _ = read(fd, &buf, buf.count)
             let body = "<title>KA</title>"
             let out = Array("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: \(body.utf8.count)\r\n\r\n\(body)".utf8)
-            _ = write(fd, out, out.count); sleep(5); close(fd)
+            _ = write(fd, out, out.count); sleep(5)
         }
         defer { s.stop() }
         let t0 = Date()

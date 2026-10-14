@@ -82,6 +82,8 @@ final class DockerFakeServer: @unchecked Sendable {
     }
 
     func stop() {
+        // shutdown() first wakes the accept loop with an error, so it never re-enters accept() on a reused fd.
+        shutdown(listenFD, SHUT_RDWR)
         close(listenFD)
         lock.lock(); clients.forEach { shutdown($0, SHUT_RDWR) }; lock.unlock()
         if let p = socketPath { unlink(p) }
