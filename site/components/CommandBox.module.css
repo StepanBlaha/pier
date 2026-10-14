@@ -1,0 +1,33 @@
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 8px 8px 8px 20px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  min-width: 0;
+}
+.cream { background: var(--cream); box-shadow: none; }
+
+.prompt { color: var(--blue); font-family: var(--font-mono); font-weight: 600; user-select: none; }
+
+.code {
+  flex: 1 1 15rem;
+  min-width: 0;
+  padding: 8px 0;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--navy);
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+@media (max-width: 420px) {
+  .box { padding-left: 16px; }
+  .code { font-size: 0.85rem; }
+}

@@ -1,0 +1,128 @@
+.hero {
+  position: relative;
+  overflow: clip;
+  padding-block: clamp(24px, 4vw, 48px) clamp(88px, 10vw, 120px);
+}
+
+.blobs { position: absolute; inset: 0; pointer-events: none; }
+.blobBlue {
+  position: absolute;
+  right: -12%;
+  top: -10%;
+  width: min(760px, 90vw);
+  aspect-ratio: 1;
+  background: radial-gradient(closest-side, rgba(35, 80, 168, 0.16), rgba(35, 80, 168, 0));
+}
+.blobYellow {
+  position: absolute;
+  left: -10%;
+  bottom: -8%;
+  width: min(520px, 70vw);
+  aspect-ratio: 1;
+  background: radial-gradient(closest-side, rgba(245, 184, 46, 0.26), rgba(245, 184, 46, 0));
+}
+
+.grid { grid-template-columns: minmax(0, 1fr); position: relative; display: grid; gap: clamp(32px, 6vw, 56px); align-items: center; }
+@media (min-width: 900px) {
+  .grid { grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr); gap: 48px; min-height: min(720px, calc(100svh - 120px)); }
+}
+
+.copy { grid-template-columns: minmax(0, 1fr); display: grid; justify-items: start; gap: 24px; min-width: 0; }
+
+.title {
+  font-size: clamp(2.7rem, 7.4vw, 5.3rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  color: var(--navy);
+}
+.port {
+  display: inline-block;
+  padding: 0.02em 0.2em 0.06em;
+  margin-inline: 0.02em;
+  border-radius: 0.24em;
+  background: var(--yellow);
+  color: var(--navy);
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  vertical-align: 0.04em;
+}
+
+.sub { max-width: 34em; font-size: clamp(1.1rem, 1.9vw, 1.3rem); line-height: 1.55; color: var(--muted); }
+.install { width: 100%; max-width: 540px; }
+.secondary { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.fine { font-size: 0.95rem; color: var(--muted); }
+
+/* Intro: CSS only, so the headline paints without waiting for JS. */
+.in { animation: rise 0.8s var(--ease-out) calc(var(--i, 0) * 90ms) both; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+
+.stage { grid-template-columns: minmax(0, 1fr); position: relative; display: grid; justify-items: center; gap: 28px; width: 100%; max-width: 520px; margin-inline: auto; min-width: 0; }
+.bubbleWrap { width: 100%; display: flex; justify-content: center; position: relative; z-index: 2; }
+
+.gullWrap { position: relative; width: 100%; aspect-ratio: 1 / 0.98; }
+.gullPar { position: absolute; left: 11%; width: 78%; bottom: 0; z-index: 1; }
+.gullIn { animation: gullIn 0.9s var(--ease-out) 0.25s both; transform-origin: 50% 100%; }
+@keyframes gullIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.94); }
+  to { opacity: 1; transform: none; }
+}
+.gullBreath { animation: breathe 5s ease-in-out 1.2s infinite; transform-origin: 50% 100%; }
+@keyframes breathe {
+  0%, 100% { translate: 0 0; scale: 1; }
+  50% { translate: 0 -6px; scale: 1.012; }
+}
+.gull { width: 100%; height: auto; filter: drop-shadow(0 18px 24px rgba(13, 27, 76, 0.12)); }
+
+.chipPos { position: absolute; z-index: 3; }
+.c1 { left: 0; top: 12%; }
+.c2 { right: 0; top: 2%; }
+.c3 { right: 0; top: 40%; }
+.c4 { left: 0; bottom: 22%; }
+.c5 { right: 4%; bottom: 4%; }
+@media (min-width: 900px) {
+  .c1 { left: -7%; }
+  .c2 { right: -3%; }
+  .c3 { right: -9%; }
+  .c4 { left: -9%; }
+  .c5 { right: 0; }
+}
+@media (max-width: 420px) {
+  .c3, .c5 { display: none; }
+  .c2 { top: 0; }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 12px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--navy);
+  animation: chipIn 0.7s var(--ease-out) var(--d) both, bob var(--b) ease-in-out calc(var(--d) + 0.7s) infinite;
+}
+.chipPort { font-family: var(--font-mono); font-weight: 600; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(63, 166, 74, 0.2); }
+@keyframes chipIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.88); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -9px; }
+}
+
+.wave { position: absolute; left: 0; bottom: -1px; width: 100%; height: clamp(24px, 4vw, 48px); fill: var(--cream-2); }

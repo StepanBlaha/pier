@@ -1,0 +1,36 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 24px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.18s var(--ease-out), color 0.18s var(--ease-out), border-color 0.18s var(--ease-out), transform 0.18s var(--ease-out);
+}
+.btn svg { flex: none; }
+
+.sm { min-height: 42px; padding: 0 18px; font-size: 0.95rem; }
+
+.yellow { background: var(--yellow); color: var(--navy); }
+.navy { background: var(--navy); color: var(--cream); }
+.white { background: var(--paper); color: var(--navy); border-color: var(--line); }
+
+@media (hover: hover) and (pointer: fine) {
+  .yellow:hover { background: var(--navy); color: var(--cream); }
+  .navy:hover { background: var(--blue-2); color: var(--cream); }
+  .white:hover { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+}
+
+.yellow:active { background: var(--navy); color: var(--cream); transform: scale(0.98); }
+.navy:active { background: var(--blue-2); transform: scale(0.98); }
+.white:active { background: var(--navy); color: var(--cream); border-color: var(--navy); transform: scale(0.98); }

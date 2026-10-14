@@ -6,7 +6,8 @@
 
 <p align="center">
   <b>See what's running on localhost, and which project it belongs to.</b><br>
-  A macOS menu bar app and CLI for finding, opening, restarting and cleaning up your dev servers.
+  A macOS menu bar app and CLI for finding, opening, restarting and cleaning up your dev servers.<br>
+  <a href="https://stepanblaha.github.io/pier/"><b>stepanblaha.github.io/pier</b></a>
 </p>
 
 <p align="center">

@@ -1,0 +1,15 @@
+# pier
+
+> pier shows what's running on localhost and which project it belongs to. It is a free, open source (MIT) macOS 14+ menu bar app and command line tool by Štěpán Bláha.
+
+- Install: `brew install stepanblaha/tap/pier`, then optionally `pier app install` for the menu bar app.
+- For every listening port it identifies the project (from the process working directory), framework, infrastructure (PostgreSQL, Redis, Ollama, Docker), page title, git branch, health, LAN exposure and the app that started it.
+- CLI commands: `pier` (list), `pier watch`, `pier info`, `pier open`, `pier stop`, `pier stale`, `pier prune`, `pier qr`, `pier free`, `pier run`, `pier logs`, `pier restart`, `pier up`, `pier down`, `pier expose`, `pier mcp`. Every command supports `--json`.
+- Claude Code integration: `claude mcp add --scope user pier -- pier mcp`.
+
+## Links
+
+- Source code: https://github.com/StepanBlaha/pier
+- Releases: https://github.com/StepanBlaha/pier/releases
+- Changelog: https://github.com/StepanBlaha/pier/blob/main/CHANGELOG.md
+- pier.yml stack reference: https://github.com/StepanBlaha/pier/blob/main/docs/pier-yml.md

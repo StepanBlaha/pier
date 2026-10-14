@@ -1,0 +1,16 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: 3px;
+  transition: color 0.18s var(--ease-out), text-decoration-color 0.18s var(--ease-out);
+}
+.link svg { flex: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover { color: var(--blue); text-decoration-color: var(--blue); }
+}
+.link:active { color: var(--blue); }

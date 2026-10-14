@@ -1,0 +1,24 @@
+.head { grid-template-columns: minmax(0, 1fr); display: grid; gap: 24px; margin-bottom: clamp(32px, 5vw, 56px); }
+.withAside { align-items: end; }
+@media (min-width: 760px) {
+  .withAside { grid-template-columns: minmax(0, 1fr) auto; gap: 40px; }
+}
+
+.text { grid-template-columns: minmax(0, 1fr); display: grid; gap: 16px; max-width: 700px; }
+
+.title {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(2rem, 4.6vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  color: var(--navy);
+}
+
+.lead { font-size: clamp(1.02rem, 1.5vw, 1.15rem); line-height: 1.6; color: var(--muted); max-width: 58ch; }
+.lead :where(p + p) { margin-top: 12px; }
+.lead :where(code) { font-size: 0.88em; font-weight: 600; color: var(--navy); background: color-mix(in srgb, var(--blue) 10%, transparent); padding: 0.1em 0.4em; border-radius: 6px; }
+
+.aside { display: flex; justify-content: flex-start; }
+@media (min-width: 760px) { .aside { justify-content: flex-end; } }

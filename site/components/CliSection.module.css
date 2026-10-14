@@ -1,0 +1,60 @@
+.section { overflow: clip; padding-block: var(--section-y); }
+
+.gull { width: clamp(110px, 14vw, 170px); height: auto; }
+
+.grid { grid-template-columns: minmax(0, 1fr); display: grid; gap: 14px; margin-top: clamp(40px, 6vw, 72px); }
+@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.item { display: flex; }
+.cell {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2px 8px;
+  padding: 14px 10px 16px 18px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-s);
+  min-width: 0;
+}
+.cmd {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--blue);
+  overflow-wrap: anywhere;
+}
+.copy { grid-column: 2; grid-row: 1; }
+.body { grid-column: 1 / -1; padding-right: 8px; font-size: 0.95rem; line-height: 1.5; color: var(--muted); }
+
+.any { grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  gap: 16px;
+  margin-top: clamp(40px, 6vw, 72px);
+  padding: clamp(24px, 4vw, 40px);
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow);
+}
+@media (min-width: 700px) { .any { grid-template-columns: auto minmax(0, 1fr); gap: 24px; } }
+
+.anyIcon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: color-mix(in srgb, var(--yellow) 30%, var(--paper)); color: var(--navy); }
+.anyText { grid-template-columns: minmax(0, 1fr); display: grid; gap: 12px; min-width: 0; }
+.anyText :where(p) { color: var(--muted); max-width: 62ch; line-height: 1.6; }
+.anyText :where(code) { font-size: 0.88em; font-weight: 600; color: var(--navy); background: color-mix(in srgb, var(--blue) 10%, transparent); padding: 0.1em 0.4em; border-radius: 6px; }
+.anyTitle { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.chip {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--cream);
+  border: 1.5px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+}

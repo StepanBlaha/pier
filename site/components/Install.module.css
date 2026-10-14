@@ -1,0 +1,64 @@
+.section {
+  position: relative;
+  overflow: clip;
+  padding-block: var(--section-y) calc(var(--section-y) * 0.55 + 70px);
+}
+
+.card { grid-template-columns: minmax(0, 1fr);
+  position: relative;
+  margin-top: clamp(100px, 12vw, 124px);
+  display: grid;
+  gap: 28px;
+  padding: clamp(24px, 4.5vw, 48px);
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-l);
+}
+
+/* The gull stands on the card's top edge. */
+.gull {
+  position: absolute;
+  right: clamp(16px, 5vw, 56px);
+  bottom: calc(100% - 6px);
+  width: clamp(112px, 15vw, 170px);
+  height: auto;
+}
+
+.steps { grid-template-columns: minmax(0, 1fr); display: grid; gap: 28px; }
+.step { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (min-width: 640px) { .step { gap: 24px; } }
+
+.num {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: var(--navy);
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+.stepBody { grid-template-columns: minmax(0, 1fr); display: grid; gap: 12px; min-width: 0; }
+.stepTitle { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; min-height: 44px; font-size: 1.3rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; }
+.optional {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--blue) 12%, var(--paper));
+  color: var(--blue-2);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-top: 24px;
+  border-top: 1.5px solid var(--line);
+  color: var(--muted);
+}
+.note svg { flex: none; margin-top: 2px; color: var(--blue); }
+.note p { line-height: 1.6; }

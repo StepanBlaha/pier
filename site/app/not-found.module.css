@@ -1,0 +1,55 @@
+.page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  overflow: clip;
+  background:
+    radial-gradient(closest-side at 80% 20%, rgba(35, 80, 168, 0.14), rgba(35, 80, 168, 0)) no-repeat,
+    var(--cream);
+}
+
+.bar { display: flex; align-items: center; height: 68px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; border-radius: 12px; }
+.logo { border-radius: 10px; }
+.wordmark { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--navy); }
+
+.main { grid-template-columns: minmax(0, 1fr);
+  flex: 1;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 24px;
+  padding-block: 32px 240px;
+}
+@media (min-width: 760px) {
+  .main { justify-items: center; text-align: center; padding-block: 32px 120px; }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 12px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.chip b { font-family: var(--font-mono); font-weight: 600; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--err); box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.2); }
+
+.title {
+  max-width: 14ch;
+  font-size: clamp(2.5rem, 7vw, 4.8rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+.text { max-width: 36em; font-size: 1.1rem; color: var(--muted); }
+
+/* The art is cropped at its left and bottom edges, so it peeks from the page's bottom left corner. */
+.gull { position: absolute; left: 0; bottom: 0; width: clamp(170px, 26vw, 320px); height: auto; pointer-events: none; }

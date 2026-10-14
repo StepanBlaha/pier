@@ -1,0 +1,83 @@
+.section { overflow: clip; padding-block: var(--section-y); background: var(--cream-2); }
+
+.grid { grid-template-columns: minmax(0, 1fr); display: grid; gap: clamp(32px, 5vw, 64px); align-items: start; }
+@media (min-width: 960px) { .grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); } }
+
+.left { grid-template-columns: minmax(0, 1fr); display: grid; gap: 24px; min-width: 0; }
+.left > :where(*) { min-width: 0; }
+.gull { width: clamp(120px, 14vw, 170px); height: auto; }
+
+.can { display: flex; flex-wrap: wrap; gap: 8px; }
+.canItem {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.safety {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 16px 18px;
+  border-radius: var(--radius-s);
+  background: color-mix(in srgb, var(--yellow) 26%, var(--cream-2));
+  font-weight: 600;
+  line-height: 1.45;
+}
+.safety svg { flex: none; margin-top: 1px; }
+
+.right { min-width: 0; }
+.chat {
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-l);
+  overflow: hidden;
+}
+.chatBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-bottom: 1.5px solid var(--line);
+  background: var(--cream);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.msgs { grid-template-columns: minmax(0, 1fr); display: grid; gap: 22px; padding: clamp(18px, 3vw, 28px); }
+.msg { grid-template-columns: minmax(0, 1fr); display: grid; gap: 8px; }
+
+.bubble {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 8px 8px 8px 18px;
+  border-radius: 22px 22px 6px 22px;
+  background: color-mix(in srgb, var(--blue) 12%, var(--paper));
+  border: 1.5px solid color-mix(in srgb, var(--blue) 22%, transparent);
+}
+.prompt { font-weight: 600; line-height: 1.4; color: var(--navy); overflow-wrap: anywhere; padding: 4px 0; }
+.copy { flex: none; }
+
+.does {
+  justify-self: start;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 94%;
+  padding: 8px 14px;
+  border-radius: 6px 18px 18px 18px;
+  background: var(--cream);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.does svg { flex: none; margin-top: 2px; color: var(--blue); }

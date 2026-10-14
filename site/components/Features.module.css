@@ -1,0 +1,57 @@
+.section { overflow: clip; padding-block: var(--section-y); }
+
+.tile {
+  position: relative;
+  width: clamp(190px, 22vw, 250px);
+  aspect-ratio: 1.15;
+  overflow: hidden;
+  border-radius: var(--radius-l);
+  background: linear-gradient(160deg, #dde7fa 0%, #eef3fc 100%);
+  box-shadow: inset 0 0 0 1.5px rgba(35, 80, 168, 0.12);
+}
+/* The gull art is cropped at its left and bottom edges, so it is mirrored into the tile's bottom right corner. */
+.gull {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 92%;
+  height: auto;
+  transform: scaleX(-1);
+}
+
+.grid { grid-template-columns: minmax(0, 1fr); display: grid; gap: 20px; }
+@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; } }
+
+.item { display: flex; }
+
+.card { grid-template-columns: minmax(0, 1fr);
+  flex: 1;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 28px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .card:hover { box-shadow: var(--shadow-l); transform: translateY(-3px); }
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 6px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--yellow) 30%, var(--paper));
+  color: var(--navy);
+}
+.item:nth-child(3n + 2) .icon { background: color-mix(in srgb, var(--blue) 14%, var(--paper)); }
+
+.title { font-size: 1.28rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.2; color: var(--navy); }
+.body { color: var(--muted); font-size: 1rem; line-height: 1.55; }

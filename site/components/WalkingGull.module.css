@@ -1,0 +1,20 @@
+.track { position: absolute; left: 0; right: 0; bottom: 0; height: 100px; pointer-events: none; overflow: clip; }
+
+.walker { position: absolute; left: 0; bottom: 14px; width: 88px; }
+.gull { width: 100%; height: auto; }
+
+/* Pier deck: planks with a gap every 56px. */
+.deck {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 14px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 54px, var(--cream) 54px 56px),
+    var(--navy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .walker { left: 50%; margin-left: -44px; }
+}

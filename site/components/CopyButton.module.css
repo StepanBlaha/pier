@@ -1,0 +1,46 @@
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: none;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--navy);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.18s var(--ease-out), color 0.18s var(--ease-out), border-color 0.18s var(--ease-out), transform 0.18s var(--ease-out);
+}
+
+.icons { position: relative; display: grid; place-items: center; width: 17px; height: 17px; }
+.icons svg { grid-area: 1 / 1; transition: opacity 0.18s var(--ease-out), transform 0.22s var(--ease-out); }
+.iconCheck { opacity: 0; transform: scale(0.5); }
+
+/* Both labels share one grid cell so the button never changes width. */
+.labels { display: grid; }
+.labels > span { grid-area: 1 / 1; }
+.labelDone { visibility: hidden; }
+
+.done { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+.done .iconCopy { opacity: 0; transform: scale(0.5); }
+.done .iconCheck { opacity: 1; transform: scale(1); }
+.done .labelCopy { visibility: hidden; }
+.done .labelDone { visibility: visible; }
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+}
+.btn:active { background: var(--navy); color: var(--cream); border-color: var(--navy); transform: scale(0.97); }
+
+/* Compact: icon only until it is copied, then a small "Copied" pill appears beside it. */
+.compact { min-height: 36px; min-width: 36px; padding: 0 10px; gap: 6px; font-size: 0.8rem; }
+.compact .labels { display: none; }
+.compact.done .labels { display: grid; }
+.compact.done .labelCopy { display: none; }
